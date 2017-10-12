@@ -2,6 +2,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var RandExp = require('randexp');
+var tools = require('./tools');
 
 http.createServer(function (req, res) {
 	//If the request is a POST
@@ -22,12 +23,20 @@ http.createServer(function (req, res) {
 						var regex = new RegExp("^[0-9a-zA-Z_]{4,}$");
 						//If the provided shortcode meet the regex
 						if(regex.test(jsonData.shortcode)){
-							console.log("201 Created");
-							console.log("Content-Type: " + '"' + req.headers['content-type'] + '"');
-							console.log("");
-							console.log("{")
-        					console.log('	"shortcode": ' + '"' + jsonData.shortcode + '"');
-        					console.log("}");
+							//If the shortcode is already exist
+							if(tools.keyDuplicate(jsonData.shortcode)){
+								console.log("409 The the desired shortcode is already in use (Shortcodes are case-sensitive)");
+							//If the shortcode is available
+							}else{
+								tools.pushToDatabase(jsonData);
+    							console.log("201 Created");
+								console.log("Content-Type: " + '"' + req.headers['content-type'] + '"');
+								console.log("");
+								console.log("{");
+    							console.log('	"shortcode": ' + '"' + jsonData.shortcode + '"');
+    							console.log("}");
+							}
+							
         				//If the provided shortcode doesn't meet the regex
 						}else{
 							console.log("422 The shortcode fails to meet the following regexp: ^[0-9a-zA-Z_]{4,}$");
