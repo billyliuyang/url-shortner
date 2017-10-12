@@ -5,9 +5,9 @@ var RandExp = require('randexp');
 var tools = require('./tools');
 
 http.createServer(function (req, res) {
+	var q = url.parse(req.url, true);
 	//If the request is a POST
 	if (req.method == 'POST') {
-		var q = url.parse(req.url, true);
 		var requestData = "";
 		//If the POST requst aims to /shorten
 		if(q.pathname == '/shorten'){
@@ -24,13 +24,14 @@ http.createServer(function (req, res) {
 						//If the provided shortcode meet the regex
 						if(regex.test(jsonData.shortcode)){
 							//If the shortcode is already exist
-							if(tools.keyDuplicate(jsonData.shortcode)){
+							if(tools.hasKey(jsonData.shortcode)){
 								console.log("409 The the desired shortcode is already in use (Shortcodes are case-sensitive)");
 							//If the shortcode is available
 							}else{
 								var storeData = jsonData;
 								storeData["stats"] = {
 									startData: new Date().toISOString(),
+									lastSeenDate: null,
 									redirectCount: 0
 								};
 								tools.pushToDatabase(storeData);
@@ -54,6 +55,7 @@ http.createServer(function (req, res) {
 						storeData["shortcode"] = shortcode;
 						storeData["stats"] = {
 							startData: new Date().toISOString(),
+							lastSeenDate: null,
 							redirectCount: 0
 						};
 						tools.pushToDatabase(storeData);
@@ -79,37 +81,37 @@ http.createServer(function (req, res) {
 
 	//If the request is a GET
 	}else{
-		console.log("GET request");
-		res.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+		var pathArray = q.pathname.split('/');
+		var shortcode = pathArray[1];
+		//GET /:shortcode
+		if(pathArray.length == 2 && shortcode != ''){
+			//Queried shortcode exist in database
+			if(tools.hasKey(shortcode)){
+				tools.changeStats(shortcode);
+				console.log("302 Found");
+				console.log("Location: " + tools.findLocation(shortcode));
+			//Queried shortcode doesn't exist
+			}else{
+				console.log("404 The shortcode cannot be found in the system");
+			}
+		//GET /:shortcode/stats
+		}else if(pathArray.length == 3 && shortcode != '' && pathArray[2] == "stats"){
+			//Queried shortcode exist in database
+			if(tools.hasKey(shortcode)){
+				console.log("200 OK");
+				console.log('Content-Type: "application/json"');
+				console.log("");
+				console.log(tools.findStats(shortcode));
+			//Queried shortcode doesn't exist
+			}else{
+				console.log("404 The shortcode cannot be found in the system");
+			}
+		//Invalid GET request
+		}else{
+			console.log("Error: Invalid GET request.");
+		}
+
 		res.end();
 	}
-  
-
-
-  // if (req.method == 'POST'){
-	 //  var q = url.parse(req.url, true);
-	 //  if (q){
-
-	 //  }else{
-
-	 //  }
-
-
-	 //  var filename = "." + q.pathname;
-	 //  fs.readFile(filename, function(err, data) {
-	 //    if (err) {
-	 //      res.writeHead(404, {'Content-Type': 'text/html'});
-	 //      console.log(err);
-	 //      return res.end("404 Not Found");
-	 //    } 
-	 //    res.writeHead(200, {'Content-Type': 'text/html'});
-	 //    res.write(data);
-	 //    console.log(data);
-	 //    return res.end();
-	 //  });
-  // } else {
-  // 		console.log("get request");
-  //   	res.writeHead(200, "OK", {'Content-Type': 'text/plain'});
-  //   	res.end();
-  // };
+	
 }).listen(8080);
