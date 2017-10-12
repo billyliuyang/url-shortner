@@ -1,6 +1,6 @@
 var request = require('request');
 var fs = require('fs');
-var requestData = JSON.parse(fs.readFileSync('./requestData.json', 'utf8'));
+var requestData = JSON.parse(fs.readFileSync('./JSONs/requestData.json', 'utf8'));
 
 request.post({
 	url: "http://localhost:8080/shorten",

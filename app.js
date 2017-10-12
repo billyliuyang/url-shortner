@@ -17,9 +17,9 @@ http.createServer(function (req, res) {
 			req.on('end',function(){
 				var jsonData = JSON.parse(requestData)
 				//If the url is provided
-				if(jsonData.url != ""){
+				if(jsonData.hasOwnProperty("url")){
 					//If the shortcode is provided
-					if(jsonData.shortcode != ""){
+					if(jsonData.hasOwnProperty("shortcode")){
 						var regex = new RegExp("^[0-9a-zA-Z_]{4,}$");
 						//If the provided shortcode meet the regex
 						if(regex.test(jsonData.shortcode)){
@@ -28,7 +28,12 @@ http.createServer(function (req, res) {
 								console.log("409 The the desired shortcode is already in use (Shortcodes are case-sensitive)");
 							//If the shortcode is available
 							}else{
-								tools.pushToDatabase(jsonData);
+								var storeData = jsonData;
+								storeData["stats"] = {
+									startData: new Date().toISOString(),
+									redirectCount: 0
+								};
+								tools.pushToDatabase(storeData);
     							console.log("201 Created");
 								console.log("Content-Type: " + '"' + req.headers['content-type'] + '"');
 								console.log("");
@@ -44,7 +49,20 @@ http.createServer(function (req, res) {
 						
         			//If the shortcode is null
 					}else{
-						console.log(new RandExp("^[0-9a-zA-Z_]{6}$").gen());
+						var storeData = jsonData;
+						var shortcode = new RandExp("^[0-9a-zA-Z_]{6}$").gen()
+						storeData["shortcode"] = shortcode;
+						storeData["stats"] = {
+							startData: new Date().toISOString(),
+							redirectCount: 0
+						};
+						tools.pushToDatabase(storeData);
+						console.log("201 Created");
+						console.log("Content-Type: " + '"' + req.headers['content-type'] + '"');
+						console.log("");
+						console.log("{");
+						console.log('	"shortcode": ' + '"' + shortcode + '"');
+						console.log("}");
 					}
 				//If the url is null
 				}else{
