@@ -7,7 +7,7 @@ Here is my solution for the shorty challenge. Thank you so mush for your time to
 
 From requirements, I finally decided to solve it with Node.js. In oder to greatly simplify the code, I didn't use any framework for this application. Moreover, this application dosen't contain any GUI. I wrote a js file that can be excuted in Terminal for sending POST request, and every results will be logged and shown in Terminal.
 
-Meanwhile, a full test suite inclue unit test and integration test is provided, which is implemented by MOCHA and Chai.
+Meanwhile, a full test suit inclue unit test and integration test is provided, which is implemented by MOCHA and Chai.
 
 Following is the specification of the application.
 
@@ -34,7 +34,7 @@ Yang Liu
   	}
   	**Please DO NOT delete item "test" in "database.js", it is used for testing**
 
-  	- requestData.json (JSON file): Customised JSON, users can define the url and shortcode in this file, and they will be read by request.js and POST to /shorten.
+	- requestData.json (JSON file): Customised JSON, users can define the url and shortcode in this file, and they will be read by request.js and POST to /shorten.
 
 -------------------------------------------------------------------------
 
@@ -68,7 +68,7 @@ http://localhost:8080/example/stats
 http://localhost:8080/shortcodecannotbefound/stats
 ```
 
-## TEST Suites
+## TEST suit
 In terminal:
 ```
 npm run test
