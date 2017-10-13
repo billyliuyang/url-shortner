@@ -8,15 +8,6 @@
       "redirectCount": 0
     }
   },
-  "Example": {
-    "url": "http://example.com",
-    "shortcode": "Example",
-    "stats": {
-      "startData": "2017-10-12T18:15:46.398Z",
-      "lastSeenDate": "2017-10-12T18:18:01.083Z",
-      "redirectCount": 2
-    }
-  },
   "test": {
     "url": "http://test.com",
     "shortcode": "test",

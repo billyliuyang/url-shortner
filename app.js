@@ -33,6 +33,7 @@ var server = module.exports = http.createServer(function (req, res) {
 							if(tools.hasKey(jsonData.shortcode)){
 								console.log("409 The the desired shortcode is already in use (Shortcodes are case-sensitive)");
 								res.writeHead(409, {'Content-Type': 'text/plain'});
+								res.end();
 
 							//If the shortcode is available
 							}else{
@@ -50,11 +51,14 @@ var server = module.exports = http.createServer(function (req, res) {
     							console.log('	"shortcode": ' + '"' + jsonData.shortcode + '"');
     							console.log("}");
     							res.writeHead(201, {'Content-Type': 'text/plain'});
+    							res.end();
 							}
 							
         				//If the provided shortcode doesn't meet the regex
 						}else{
 							console.log("422 The shortcode fails to meet the following regexp: ^[0-9a-zA-Z_]{4,}$");
+							res.writeHead(422, {'Content-Type': 'text/plain'});
+							res.end();
 						}
 						
         			//If the shortcode is null
@@ -75,22 +79,25 @@ var server = module.exports = http.createServer(function (req, res) {
 						console.log('	"shortcode": ' + '"' + shortcode + '"');
 						console.log("}");
 						res.writeHead(201, {'Content-Type': 'text/plain'});
+						res.end();
 					}
 
 				//If the url is null
 				}else{
 					console.log("400 URL is not present")
+					res.writeHead(400, {'Content-Type': 'text/plain'});
+					res.end();
 				}
 			});
-			res.end();
 
 		//If the POST request doesn't point to /shorten
 		}else{
 			console.log("Error: Invalid POST request.");
 		}
+	};
 
 	//If the request is a GET
-	}else{
+	if (req.method == 'GET'){
 		var pathArray = q.pathname.split('/');
 		var shortcode = pathArray[1];
 
@@ -102,10 +109,13 @@ var server = module.exports = http.createServer(function (req, res) {
 				tools.changeStats(shortcode);
 				console.log("302 Found");
 				console.log("Location: " + tools.findLocation(shortcode));
-
+				res.writeHead(302, {'Content-Type': 'text/plain'});
+				res.end();
 			//Queried shortcode doesn't exist
 			}else{
 				console.log("404 The shortcode cannot be found in the system");
+				res.writeHead(404, {'Content-Type': 'text/plain'});
+				res.end();
 			}
 
 		//GET /:shortcode/stats
@@ -117,17 +127,21 @@ var server = module.exports = http.createServer(function (req, res) {
 				console.log('Content-Type: "application/json"');
 				console.log("");
 				console.log(tools.findStats(shortcode));
+				res.writeHead(200, {'Content-Type': 'text/plain'});
+				res.end();
 
 			//Queried shortcode doesn't exist
 			}else{
 				console.log("404 The shortcode cannot be found in the system");
+				res.writeHead(404, {'Content-Type': 'text/plain'});
+				res.end();
 			}
 
 		//Invalid GET request
 		}else{
 			console.log("Error: Invalid GET request.");
+			res.end();
 		}
-		res.end();
-	}
+	};
 });
 server.listen(8080);
