@@ -39,7 +39,7 @@ var server = module.exports = http.createServer(function (req, res) {
 							}else{
 								var storeData = jsonData;
 								storeData["stats"] = {
-									startData: new Date().toISOString(),
+									startDate: new Date().toISOString(),
 									lastSeenDate: null,
 									redirectCount: 0
 								};
@@ -67,7 +67,7 @@ var server = module.exports = http.createServer(function (req, res) {
 						var shortcode = new RandExp("^[0-9a-zA-Z_]{6}$").gen()
 						storeData["shortcode"] = shortcode;
 						storeData["stats"] = {
-							startData: new Date().toISOString(),
+							startDate: new Date().toISOString(),
 							lastSeenDate: null,
 							redirectCount: 0
 						};

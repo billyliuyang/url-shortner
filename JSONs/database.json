@@ -3,7 +3,7 @@
     "url": "http://example.com",
     "shortcode": "example",
     "stats": {
-      "startData": "2017-10-12T18:15:11.741Z",
+      "startDate": "2017-10-12T18:15:11.741Z",
       "lastSeenDate": null,
       "redirectCount": 0
     }
@@ -12,9 +12,9 @@
     "url": "http://test.com",
     "shortcode": "test",
     "stats": {
-      "startData": "2017-10-12T18:15:46.398Z",
-      "lastSeenDate": null,
-      "redirectCount": 0
+      "startDate": "2017-10-12T18:15:46.398Z",
+      "lastSeenDate": "2017-10-13T03:03:31.364Z",
+      "redirectCount": 2
     }
   }
 }
