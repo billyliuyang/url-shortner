@@ -23,15 +23,17 @@ Yang Liu
 * request.js (Node.js file): Due to without GUI, POST request have to be sent through Terminal. By excuting this file, a customised JSON will be POST to /shorten.
 * JSONs (folder) :
 	- database.json (JSON file): This JSON file serves as a lightweight database for this application. The schemema is:
+  ```
 	:shortcode: {
-    	"url": :url,
-    	"shortcode": :shortcode,
-    	"stats": {
-      		"startDate": :startDate,
-      		"lastSeenDate": :lastSeenDate,
-      		"redirectCount": :redirectCount
-    	}
+  	"url": :url,
+  	"shortcode": :shortcode,
+  	"stats": {
+    		"startDate": :startDate,
+    		"lastSeenDate": :lastSeenDate,
+    		"redirectCount": :redirectCount
   	}
+  }
+  ```
   	**Please DO NOT delete item "test" in "database.js", it is used for testing**
 
 	- requestData.json (JSON file): Customised JSON, users can define the url and shortcode in this file, and they will be read by request.js and POST to /shorten.
