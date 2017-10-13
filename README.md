@@ -34,10 +34,43 @@ Yang Liu
   	}
   	**Please DO NOT delete item "test" in "database.js", it is used for testing**
 
-  	-requestData.json (JSON file): Customised JSON, users can define the url and shortcode in this file, and they will be read by request.js and POST to /shorten.
+  	- requestData.json (JSON file): Customised JSON, users can define the url and shortcode in this file, and they will be read by request.js and POST to /shorten.
 
 -------------------------------------------------------------------------
 
+## Clone
+For cloning the application, in Terminal:
+```
+git clone https://github.com/billyliuyang/url-shortner.git
+cd url-shortner
+```
+## Runing server
+```
+node app.js
+```
+**ALL Returned results are logged on this Terminal**
+## POST /shorten
+Keep the server Terminal running and open a new terminal go to the directory of the application:
+```
+node request.js
+```
+**Change ./JSONs/requestData.json file to make different POST requests.**
+## GET /:shortcode
+Open a browser and go:
+```
+http://localhost:8080/example
+http://localhost:8080/shortcodecannotbefound
+```
+## GET /:shortcode/stats
+Open a browser and go:
+```
+http://localhost:8080/example/stats
+http://localhost:8080/shortcodecannotbefound/stats
+```
 
-
-
+## TEST Suites
+In terminal:
+```
+npm run test
+```
+**Totally 12 test include 4 unit test and 8 integration test, ALL PASS**
