@@ -24,6 +24,7 @@ Yang Liu
 * JSONs (folder) :
 	- database.json (JSON file): This JSON file serves as a lightweight database for this application. The schemema is:
   ```
+  {
 	:shortcode: {
   	"url": :url,
   	"shortcode": :shortcode,
@@ -31,6 +32,7 @@ Yang Liu
     		"startDate": :startDate,
     		"lastSeenDate": :lastSeenDate,
     		"redirectCount": :redirectCount
+  	}
   	}
   }
   ```
