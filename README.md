@@ -22,7 +22,7 @@ Yang Liu
 * tools.js (Node.js file) : This file packs several functions which are invoked in main program. The advantage of doing so is easier maintainance and convinient to conduct unit test.
 * request.js (Node.js file): Due to without GUI, POST request have to be sent through Terminal. By excuting this file, a customised JSON will be POST to /shorten.
 * JSONs (folder) :
-	- database.json (JSON file): This JSON file serves as a lightweight database for this application. The schemema is:
+	- database.json (JSON file): This JSON file serves as a lightweight database for this application. The schema is:
   ```
   {
 	:shortcode: {
@@ -33,7 +33,7 @@ Yang Liu
     		"lastSeenDate": :lastSeenDate,
     		"redirectCount": :redirectCount
   	}
-  	}
+     }
   }
   ```
   	**Please DO NOT delete item "test" in "database.js", it is used for testing**
